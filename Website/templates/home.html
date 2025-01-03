@@ -1,0 +1,41 @@
+<!-- Specifies that the template extends base.html 
+ and overrides the title block defined in base.html. setting the title to 'Home' instead-->
+
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+<!-- Overrides the content block in base.html-->
+{% block content %}
+
+<!-- Displays a centered heading called Notes-->
+<h1 align = "center">Notes</h1>
+<!-- 
+Creates a list and starts a loop to iterate through the user's notes,
+ and creates an item for each note which is then inserted into the list
+
+Adds a delete button next to each note using Bootstrap
+Calls the deleteNote function defined in index.js which is called in base.html
+The span block displays the x symbol 
+-->
+<ul class = "list-group list-group-flush" id="notes">
+    {%for note in user.notes %}
+    <li class = "list-group-item">{{note.data}}
+        <button type="button" class = "close" onClick="deleteNote({{ note.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+
+<!-- 
+Creates a form for submitting a new note via POST request. 
+Adds a textarea for the user to input their note and a line break for spacing
+Creates a submit button
+-->
+<form method="POST">
+    <textarea name = "note" id = 'note' class="form-control"></textarea>
+    <br/>
+    <div align="center">
+        <button type="'submit" class = "btn btn-primary">Add Note</button>
+    </div>
+{% endblock %}  
